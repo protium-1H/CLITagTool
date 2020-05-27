@@ -1,0 +1,112 @@
+\title{TagTool Documentation}
+\author{Annabelle Naby}
+
+\date{Last Updated: \today\\Version 1.0}
+
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\begin{document}
+\maketitle
+\section{Overview}
+\paragraph{Description}
+TagTool is a program designed to preform searches on a custom filename based tagging system. The po
+\paragraph{Files}
+In order to utilize this program any applicable files must be named with the following format: ``[Tag\_1]...[Tag\_n]name.ext'' in order to be processed. Special characters inside tag brackets, such as spaces, are valid.
+\section{Usage}\label{usage}
+\paragraph{Options}
+\begin{itemize}
+    \item -f <directory>:\\ Sets the directory to preform search/list on. Defaults to present working directory.
+    \item -l:\\ Lists all searchable tags within the directory.
+    \item -n:\\ Sorts matches alphabetically (0-9A-Z).
+    \item -d:\\ Sorts matches by date of creation (oldest first).
+    \item -t:\\ Sorts matches by length of video (shortest first).
+    \item -r:\\ Reverse search results.
+\end{itemize}
+\paragraph{Searching}\label{searching} Search queries support full boolean search with the additional search parameters of date of creation and, if the file is a video, length of video. Search operations may be chained and grouped to create a more percise search.
+\paragraph{Executing Match} After running a valid search, any matches found may be opened by its default program by entering the index number of the desired match.
+\paragraph{Fomatting}
+\begin{itemize}
+    \item Filename: To create a file capable of being searched for all applicable tags must be put in the filename, each surrounded by brackets.\\\\
+    Example File: [tag\_a][tag\_b]...[tag\_z]filename.ext
+    \item Date: To search for a date range, input the full year, month, and day, with no characters inbetween. Place the `>' character to search for maximum.\\\\
+    Minimum Date: YYYYMMDD\\
+    Maximum Date: >YYYYMMDD\\
+    Date Range: YYYYMMDD>YYYY-MM-DD
+    \item Time: To search for a time range, input the hours, minutes, and seconds, with colons. Place the `>' character to search for maximum.\\\\
+    Minimum Time: H...H:MM:SS\\
+    Maximum Time: >H...H:MM:SS\\
+    Time Range: H...H:MM:SS>H...H:MM:SS
+\end{itemize}
+\section{Examples}\label{examples}
+\paragraph{List Tags} All tags present within a folder can be listed with the -l option.
+\begin{itemize}
+    \item TagTool -fl folder
+\end{itemize}
+\paragraph{And Operation} The and operation matches all files with the specified tags.
+\begin{itemize}
+    \item TagTool -f folder ``tag\_a and tag\_b''
+    \item TagTool -f folder ``tag\_a \& tag\_b''
+    \item TagTool -f folder ``tag\_a tag\_b''
+\end{itemize}
+\paragraph{Or Operation} The or operation matches all files with either of the specifed tags.
+\begin{itemize}
+    \item TagTool -f folder ``tag\_a or tag\_b''
+    \item TagTool -f folder ``tag\_a | tag\_b''
+\end{itemize}
+\paragraph{Exclude Operation} The exclude operation matches all files without the specifed tags.
+\begin{itemize}
+    \item TagTool -f folder ``tag\_a not tag\_b''
+    \item TagTool -f folder ``tag\_a -tag\_b''
+\end{itemize}
+\paragraph{Date Operation} The date operation will match all file within the specifed date range.
+\begin{itemize}
+    \item TagTool -f folder ``date 19700101''
+    \item TagTool -f folder ``@ 19700101''
+    \item TagTool -f folder ``date >20380119''
+    \item TagTool -f folder ``date 19700101>20380119''
+\end{itemize}
+\paragraph{Time Operation} The time operation matches all files within the specified time range.
+\begin{itemize}
+    \item TagTool -f folder ``time 00:00:59''
+    \item TagTool -f folder ``\# 00:00:59''
+    \item TagTool -f folder``time >01:00:00''
+    \item TagTool -f folder time 00:00:59>01:00:00''
+\end{itemize}
+\paragraph{Groupings} Search operations may be grouped together to further filter matches.
+\begin{itemize}
+    \item TagTool -f folder ``tag\_a ( tag\_b tag\_c)''
+\end{itemize}
+\paragraph{Complex Queries} All search operations can be used together to limit matches by a very specific criteria.
+\begin{itemize}
+    \item Tagtool -f folder ``tag\_a -tag\_b \&(tag\_c | \#00:30:00)  @ 20000101>20200101''
+\end{itemize}
+\section{Errors}\label{errors}
+\begin{enumerate}
+  \setlength\itemindent{50pt} 
+  \item [Exit Code 1:] No arguments specified. At a minimum the program must be run with either the -l option or a search query.
+  \item [Exit Code 2:] -f option may not be specified more than once, or used in the same argument as -s.
+  \item [Exit Code 3:] Invalid option entered. Valid options include: -f, -l, -s.
+  \item [Exit Code 4:] Cannot access folder. Either the directory does not exit, or required permissions are not met.
+  \item [Exit Code 5:] Format for date query is invalid. Valid format: YYYYMMDD>YYYYMMDD
+  \item [Exit Code 6:] Format for time query is invalid. Valid format: H...H:MM:SS>H...H:MM:SS
+  \item [Exit Code 7:] Format for tags in filename is invalid. Valid format: [tag\_1][tag\_2]...[tag\_n]filename.ext
+  \item [Exit Code 8:] Format for search query is invalid. See \hyperref[searching]{Usage(Searching)} for help.
+  \item [Exit Code 9:] Format for grouped query is invalid. See \hyperref[searching]{Usage(Searching)}
+\end{enumerate}
+\section{Known Bugs}\label{bugs}
+\begin{itemize}
+  \item Undefined behavior if -f flag is exculded.
+  \item Creation date of a file may be incorrect, cause unknown.
+\end{itemize}
+\section{Needs Implementation}
+\begin{itemize}
+  \item Sort matches by user defined criteria. (Done, Testing).
+  \item Execute match from list via default action.
+  \item Add option to execute generate folder script
+  \item Create a script to sort tags within a filename and append numeration on both files if conflict occurs.
+\end{itemize}
+\bibliographystyle{abbrv}
+\bibliography{main}
+
+\end{document}
+  
